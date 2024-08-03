@@ -194,6 +194,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+#
+<center>
+<ins>
+Disparities in Los Angeles Arrests
+</ins>
+</center>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>We will be analyzing the publicly recorded data on arrests made in Los Angeles county from 2020 to present day. Since arrests are the first process in the criminal justice system, examining them can provide more insight into potential policing malpractices, underlying biases, and the initial stages of racial and ethnic disparities.By focusing on a city known for its racial and ethnic diversity, we aim to address key research questions: Are there disparities in arrest trends among different racial or ethnic groups? Do social factors, such as neighborhoods and demographic profiles, influence policing practices and arrest rates? This project aims to reveal patterns in LA that’re concordant to the broader national trends, while also highlighting any unique local dynamics.</p>
@@ -382,7 +388,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="d0bb14bc" class="cell" data-execution_count="2">
+<p>From this sample of entries, one is able to view the columns/variables as well as some of the values that will be used in this analysis. There are also some summary statistics that reveal the most frequent value for each of the columns. Just to name a few, most of the arrests were booked, during 2021, in Rampart, and were individuals of hispanic descent.</p>
+<div id="7674e4f7" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>male <span class="op">=</span> data[data.Sex <span class="op">==</span> <span class="st">'M'</span>]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>female <span class="op">=</span> data[data.Sex <span class="op">==</span> <span class="st">'F'</span>]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>grouped_male <span class="op">=</span> male.groupby([<span class="st">'Year'</span>, <span class="st">'Descent'</span>]).size().reset_index(name <span class="op">=</span> <span class="st">'Count'</span>)</span>
@@ -435,7 +442,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="bd58844e" class="cell" data-execution_count="3">
+<p>These line charts represent the number of arrests made over time, by race. For both males and females, Hispanic people are arrested at the highest rate, followed by black people and then white people. In all cases, the number of arrests are highest in 2020 and then either plateau or decrease, with 2024 having the lowest rate of arrests across all races.</p>
+<div id="1e02a224" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>grouped_male <span class="op">=</span> male.groupby([<span class="st">'Descent'</span>, <span class="st">'Type'</span>]).size().unstack(fill_value <span class="op">=</span> <span class="dv">0</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>grouped_female <span class="op">=</span> female.groupby([<span class="st">'Descent'</span>, <span class="st">'Type'</span>]).size().unstack(fill_value <span class="op">=</span> <span class="dv">0</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -496,7 +504,8 @@ White              65.575546   34.424454
 X                   0.000000  100.000000</code></pre>
 </div>
 </div>
-<div id="c50cf1d8" class="cell" data-execution_count="4">
+<p>This set of barcharts represent the number of arrests by racial descent as well as whether the arrest was sent to booking or if the detainee was released from custody. 30% of arrests that involved White men, 21% involving Hispanic men, and 14% involving Black men were released from custody at the time of the arrest. In addition, 21% of arrests involving Black women and Hispanic women were released from custody while 34% of arrests involving white women were released.</p>
+<div id="acc2cb43" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>grouped <span class="op">=</span> data.groupby([<span class="st">'Type'</span>, <span class="st">'Offense'</span>, <span class="st">'Descent'</span>]).size().unstack(level<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>], fill_value<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bookings <span class="op">=</span> grouped.loc[<span class="st">'BOOKED'</span>]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -517,7 +526,8 @@ X                   0.000000  100.000000</code></pre>
 </div>
 </div>
 </div>
-<div id="ac584374" class="cell" data-execution_count="5">
+<p>This stacked bar chart represents the number of releases or bookings by race and offense type. All felonies were taken to booking and a majority of infractions were released. 40% of arrests involving white people charged with misdemeanors got released. 31% and 30% of arrests involving Black people and Hispanic people, respectively, charged with misdemeanors got released. Lastly, 4% of arrests involving Black people charged with infractions go to booking.</p>
+<div id="d444c3ff" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>arrests_by_area <span class="op">=</span> data[<span class="st">'Area'</span>].value_counts()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>arrests_by_area <span class="op">=</span> arrests_by_area.sort_index()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -530,8 +540,7 @@ X                   0.000000  100.000000</code></pre>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Figure 1'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -539,24 +548,21 @@ X                   0.000000  100.000000</code></pre>
 </figure>
 </div>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Figure 1</code></pre>
 </div>
-</div>
-<div id="5fcf32aa" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>race_by_area <span class="op">=</span> data.groupby([<span class="st">'Area'</span>, <span class="st">'Descent'</span>]).size().unstack(fill_value <span class="op">=</span> <span class="dv">0</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>race_by_area <span class="op">=</span> race_by_area.sort_index()</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>race_by_area.plot(kind <span class="op">=</span> <span class="st">'bar'</span>, stacked <span class="op">=</span> <span class="va">True</span>,)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Arrests by Area and Race'</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Area (in LA County)'</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Arrests'</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.legend(title <span class="op">=</span> <span class="st">'Race'</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="8f68b7cc" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>race_by_area <span class="op">=</span> data.groupby([<span class="st">'Area'</span>, <span class="st">'Descent'</span>]).size().unstack(fill_value <span class="op">=</span> <span class="dv">0</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>race_by_area <span class="op">=</span> race_by_area.sort_index()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>race_by_area.plot(kind <span class="op">=</span> <span class="st">'bar'</span>, stacked <span class="op">=</span> <span class="va">True</span>,)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Arrests by Area and Race'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Area (in LA County)'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Arrests'</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plt.legend(title <span class="op">=</span> <span class="st">'Race'</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -565,17 +571,17 @@ X                   0.000000  100.000000</code></pre>
 </div>
 </div>
 </div>
-<div id="47627807" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>offenses_by_area <span class="op">=</span> data.groupby([<span class="st">'Area'</span>, <span class="st">'Offense'</span>]).size().unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>offenses_by_area <span class="op">=</span> offenses_by_area.sort_index()</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>offenses_by_area.plot(kind <span class="op">=</span><span class="st">'bar'</span>, stacked <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Number of Each Offense by Area'</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Area'</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Offenses'</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.legend(title <span class="op">=</span> <span class="st">'Offense'</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="3d1b091a" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>offenses_by_area <span class="op">=</span> data.groupby([<span class="st">'Area'</span>, <span class="st">'Offense'</span>]).size().unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>offenses_by_area <span class="op">=</span> offenses_by_area.sort_index()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>offenses_by_area.plot(kind <span class="op">=</span><span class="st">'bar'</span>, stacked <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Number of Each Offense by Area'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Area'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Offenses'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.legend(title <span class="op">=</span> <span class="st">'Offense'</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -587,6 +593,18 @@ X                   0.000000  100.000000</code></pre>
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>This analysis reveals a consistent pattern in the arrest rates among different racial and ethnic groups. Hispanic people are arrested at the highest rate, followed by Black and then White people. This trend aligns with national data, which often shows a disproportionate impact of the criminal justice system on people of color. Additionally, the analysis of booking and release rates by race shows notable inequalities. For instance, a higher percentage of white people are released from custody at the time of the arrest compared to Black and Hispanic people.</p>
+<p>Specifically, 30% of arrests involving White men result in release, compared to 21% for Hispanic men and 14% for Black men. This disparity is also evident among women, with a higher percentage of White women being released compared to their Black and Hispanic counterparts. These findings suggest that there may be differential treatment in the decision-making process at the point of arrest. Factors such as perceived risk and socioeconomic status could influence these outcomes. This disparity raises concerns about potential biases in arrest processes and the need for further investigation into the factors driving these differences.</p>
+<p>The data on offenses and their outcomes suggests that felonies are predominantly booked, while infractions are mostly released. This trend is expected, as the severity of the offense dictates the processing outcome. However, the percentage of misdemeanor arrests resulting in release varies by race. White people charged with misdemeanors have a higher release rate (40%) compared to Black (31%) and Hispanic (30%) people. Also, although it’s not as significant, 4% of black people are booked for infraction offenses while every other race is released at 99-100%. This also signifies a sort of disparity.</p>
+<p>The spatial analysis of arrests shows that areas like 77th Street, Central LA, and Rampart have the highest number of arrests. These areas also show significant racial and ethnic variations in arrest rates. Such disparities could be indicative of varying levels of policing across neighborhoods. It is crucial to examine whether these patterns reflect targeted policing practices or broader community characteristics.</p>
+<p>The findings from this analysis highlight the need for ongoing examination of arrest practices and outcomes within the criminal justice system. The observed inequalities in arrest rates, booking and release decisions, and geographical patterns suggest that there may be systemic biases that affect people of color disproportionately, maybe even more in diverse cities like Los Angeles. Future research should aim to explore the factors contributing to these disparities in greater detail. By addressing these issues further, we can work towards a more just and equitable society, where arrest and incarceration rates reflect fairness rather than systemic inequality.</p>
+</section>
+<section id="works-cited" class="level2">
+<h2 class="anchored" data-anchor-id="works-cited">Works Cited</h2>
+<p>https://data.lacity.org/Public-Safety/Arrest-Data-from-2020-to-Present/amvf-fr72/about_data (dataset)</p>
+<p>E. Ann Carson. “Prisons Report Series: Preliminary Data Release.” Bureau of Justice Statistics,<br>
+https://bjs.ojp.gov/library/publications/prisons-report-series-preliminary-data-release#:~:text=At%20yearend%202022%2C%2032%25%20of,Hawaiian%2C%20or%20Other%20Pacific%20Islander.</p>
+<p>U.S. Census Bureau Quickfacts: United States, www.census.gov/quickfacts/fact/table/US/PST045219. Accessed 2 Aug.&nbsp;2024.</p>
 
 
 </section>
